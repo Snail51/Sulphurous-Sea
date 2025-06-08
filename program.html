@@ -109,8 +109,8 @@
                 if (Math.abs(index - progress) < 0.5) {
                     layer.classList.add('active');
                     console.debug({
-                        "scrollPosition": scrollPosition,
-                        "progress": progress,
+                        "scrollPosition": ((Math.round(scrollPosition * 100))/100),
+                        "progress": ((Math.round(progress * 100))/100),
                         "active": layer.style.backgroundImage,
                     });
                 } else {
