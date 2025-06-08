@@ -1,0 +1,50 @@
+.title {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 200vh;
+    background-color: rgb(44, 46, 54);
+    margin-left: auto; 
+    margin-right: auto;
+    top: 0px;
+    left: 0px;
+    transition: opacity 1.0s ease-out;
+    opacity: 1;
+    z-index: 10;
+}
+.title * {
+    margin-left: auto; 
+    margin-right: auto;
+    width: 50vw;
+    height: auto;
+    text-align: center;
+    font-size: 4vmin;
+    z-index: 10;
+}
+
+.title button, .title img {
+    display: inline-block;
+}
+.title.fade {
+    opacity: 0;
+    pointer-events: none;
+}
+.title button {
+    background-color: #555555;
+    border: solid #222222;
+    border-radius: 10px;
+    color: whitesmoke;
+    height: 10vh;
+    cursor: pointer;
+    
+}
+.title button:disabled {
+    /** filter: blur(2px); */
+    /** pointer-events: none; */
+    cursor: not-allowed;
+}
+
+.title button:disabled * {
+    pointer-events: none;
+}

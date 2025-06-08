@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Sulphurous Sea</title>
+    <link rel="icon" href="./img/SulphurBG.png" type="image/x-icon">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Sulphurous Sea</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Explore the depths of the Sulfuric Sea">
+    <meta name="keywords" content="terraria,ambient,vanity,sounds,music,rest,relax">
+
+    <meta property="og:title" content="Sulphurous Sea">
+    <meta property="og:description" content="Explore the depths of the Sulfuric Sea">
+    <meta property="og:site_name" content="Snailien Concepts">
+    <meta property="og:url" content="tools.snailien.net">
+    <meta property="og:image" content="./img/SulphurBG.png">
+
+    <meta itemprop="name" content="Sulphurous Sea">
+    <meta itemprop="description" content="Explore the depths of the Sulfuric Sea">
+    <meta itemprop="image" content="./img/SulphurBG.png">
+
+    <meta name="twitter:card" content="Explore the depths of the Sulfuric Sea">
+    <meta name="twitter:url" content="tools.snailien.net">
+    <meta name="twitter:title" content="Sulphurous Sea">
+    <meta name="twitter:description" content="Explore the depths of the Sulfuric Sea">
+    <meta name="twitter:image" content="./img/SulphurBG.png">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="./fontawesome/all.css">
+
+    <!-- AudioTiles -->
+    <link rel="stylesheet" href="./css/AudioTile.css">
+
+    <!-- Title Fading Logic -->
+    <link rel="stylesheet" href="./css/TitleFade.css">
+
+    <!-- <a> Styling -->
+    <link rel="stylesheet" href="./css/Links.css">
+
+    <!-- Recent / Currently Playing hider -->
+    <link rel="stylesheet" href="./css/RecentSection.css">
+
+    <!-- Dawn Chorus Font -->
+    <link rel="stylesheet" href="./fonts/DawnChorus.css">
+
+    <!-- Main Application Styling -->
+    <style>
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+        }
+
+        .background-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 2.0s ease-in-out;
+            will-change: opacity;
+        }
+
+        .background-layer.active {
+            opacity: 1;
+        }
+    </style>
+
+    <style>
+        h2 {
+            height: 10vh;
+            margin: 0px;
+        }
+        audio {
+            height: 10vh;
+            margin: 0px;
+        }
+    </style>
+
+    <!-- Title -> Content Initalization -->
+    <script>
+        window.fadeTitle = function () {
+            document.getElementById("title").classList.toggle("fade");
+            window.URIsaver.save();
+        }
+    </script>
+
+    <script>
+        const updateBackground = () => {
+            const scrollPosition = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const progress = scrollPosition / windowHeight;
+
+            
+            
+            // Activate appropriate layer
+            document.querySelectorAll('.background-layer').forEach((layer, index) => {
+                if (Math.abs(index - progress) < 0.5) {
+                    layer.classList.add('active');
+                    console.debug({
+                        "scrollPosition": scrollPosition,
+                        "progress": progress,
+                        "active": layer.style.backgroundImage,
+                    });
+                } else {
+                    layer.classList.remove('active');
+                }
+            });
+
+        };
+
+        // Throttle scroll events
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateBackground();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    </script>
+
+    <!-- Debug background color assistant for elemnt boundary checking -->
+    <script src="./code/exe/debugRandomColors.js"></script>
+</head>
+
+<body style="background-color: black; color: whitesmoke; font-size: 4vmin;">
+
+    <!-- Title page overlays all until dismissed -->
+    <div id="title" class="title">
+        <br>
+        <a target="_blank" href="https://steamcommunity.com/sharedfiles/filedetails/?id=2824688072" style="object-fit: contain;">
+            <img src="./img/Site-logo.png">
+        </a>
+
+        <hr>
+
+        <p>
+            A Vanity webpage based on the <a target="_blank" href="https://calamitymod.wiki.gg/wiki/Sulphurous_Sea">Sulphurous Sea</a> and <a target="_blank" href="https://calamitymod.wiki.gg/wiki/Abyss">Abyss</a> from the <a target="_blank" href="https://steamcommunity.com/sharedfiles/filedetails/?id=2824688072">Calamity Mod</a> for <a target="_blank" href="https://store.steampowered.com/app/105600/">Terraria</a>
+        </p>
+
+        <button onclick="window.fadeTitle()">Submerge</button>
+    </div>
+    <div id="content" class="content">
+        <div class="background-container">
+            <div class="background-layer active" style="background-image: url('./img/SulphurSeaSurfaceClose.png'); background-position: top;"></div>
+            <div class="background-layer" style="background-image: url('./img/AbyssBGLayer1.png'); background-position: top;"></div>
+            <div class="background-layer" style="background-image: url('./img/AbyssBGLayer2.png'); background-position: center;"></div>
+            <div class="background-layer" style="background-image: url('./img/AbyssBGLayer3.png'); background-position: center;"></div>
+            <div class="background-layer" style="background-image: url('./img/AbyssBGLayer4.png'); background-position: bottom;"></div>
+        </div>
+
+        <div style="height: 40vh"></div>
+
+        <h2><a href="https://youtu.be/1YaU5J6OGcE" target="_blank"><i>Wasteland</i>, Theme of <i>The Sulphurous Sea</i></a></h2>
+        <audio id="SurfaceDay" controls loop>
+            <source src="./audiosrc/terraria/SulphurousSeaDay.ogg" type="audio/ogg">
+        </audio>
+        <audio id="SurfaceNight" controls loop>
+            <source src="./audiosrc/terraria/SulphurousSeaNight.ogg" type="audio/ogg">
+        </audio>
+        <audio id="SurfaceRain" controls loop>
+            <source src="./audiosrc/terraria/SulphurousSeaRain.ogg" type="audio/ogg">
+        </audio>
+
+        <div style="height: 80vh"></div>
+
+        <h2><a href="https://youtu.be/1YaU5J6OGcE" target="_blank"><i>Hesitation</i>, Theme of <i>The Sulphuric Depths</i>, (The Abyss: Level 1)</a></h2>
+        <audio id="Abyss1" controls loop>
+            <source src="./audiosrc/terraria/AbyssLayer1.ogg" type="audio/ogg">
+        </audio>
+
+        <div style="height: 80vh"></div>
+
+        <h2><a href="https://youtu.be/cG_EgFBhG2c" target="_blank"><i>Hadopelagic Pressure</i>, (The Abyss: Level 2)</a></h2>
+        <audio id="Abyss2" controls loop>
+            <source src="./audiosrc/terraria/AbyssLayer2.ogg" type="audio/ogg">
+        </audio>
+
+        <div style="height: 80vh"></div>
+
+        <h2><a href="https://youtu.be/9NDC6q8Ege8" target="_blank"><i>Hydrothermophobia</i>, Theme of <i>The Thermal Vents</i>, (The Abyss: Level 3)</a></h2>
+        <audio id="Abyss3" controls loop title="The Abyss: Layer 3">
+            <source src="./audiosrc/terraria/AbyssLayer3.ogg" type="audio/ogg">
+        </audio>
+        <audio id="Abyss3Alt" controls loop title="The Abyss: Layer 3 (Alt)">
+            <source src="./audiosrc/terraria/AbyssLayer3Alt.ogg" type="audio/ogg">
+        </audio>
+
+        <div style="height: 80vh"></div>
+
+        <h2><a href="https://youtu.be/9NDC6q8Ege8" target="_blank"><i>Void</i>, <i>The Bottom of the Abyss</i>, (The Abyss: Level 4)</a></h2>
+        <audio id="Abyss4" controls loop title="The Abyss: Layer 4">
+            <source src="./audiosrc/terraria/AbyssLayer4.ogg" type="audio/ogg">
+        </audio>
+
+        <div style="height: 40vh"></div>
+    </div>
+</body>
+
+</html>

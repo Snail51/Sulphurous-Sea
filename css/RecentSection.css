@@ -1,0 +1,6 @@
+/* Aggregate elements of the "Recent / Currently Playing" section to hide and show */
+
+.recentSection {
+    display: none;
+    height: 1px;
+}

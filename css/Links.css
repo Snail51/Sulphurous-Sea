@@ -1,0 +1,8 @@
+a {
+    color: cyan;
+    text-decoration: none;
+    text-shadow: -1px -1px 5px black, -1px 0px 5px black, -1px 1px 5px black, 0px -1px 5px black, 0px 1px 5px black, 1px -1px 5px black, 1px 0px 5px black, 1px 1px 5px black;
+}
+a:visited {
+    color: plum;
+}
