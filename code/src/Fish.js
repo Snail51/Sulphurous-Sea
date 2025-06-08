@@ -10,9 +10,21 @@ window.createFish = function (sprite, depth, speed=1.0, direction="right")
     var newFish = document.createElement("img");
     newFish.src = sprite;
     newFish.className = "fish";
-    newFish.style.marginTop = `${Number.parseFloat(depth) + ((Math.random() * 2)-1)}vh`;
-    newFish.setAttribute("swimOffset", Math.random() * window.innerWidth);
-    newFish.setAttribute("swimSpeed", speed);
+    newFish.style.marginTop = `${(Number.parseFloat(depth)).toFixed(2)}vh`;
+    newFish.style.marginLeft = `${(Math.random() * window.innerWidth).toFixed(2)}%`;
+    newFish.setAttribute("swimSpeed", speed + (Math.random()-0.5));
+    if(direction == "random")
+    {
+        var rand = Math.round(Math.random());
+        if( rand == 0 )
+        {
+            direction = "right";
+        }
+        else
+        {
+            direction = "left";
+        }
+    }
     newFish.setAttribute("swimDirection", direction);
 
     return newFish;

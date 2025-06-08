@@ -135,6 +135,80 @@
         });
     </script>
 
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+
+            var surface = [
+                {"sprite": "./sprites/exe/SulphurousSea/Toxicatfish.gif", "mindepth": 30, "maxdepth": 100, "speed": 3.0, "direction": "left"},
+                {"sprite": "./sprites/exe/SulphurousSea/AquaticUrchin.gif", "mindepth": 30, "maxdepth": 100, "speed": 1.0, "direction": "random"},
+                {"sprite": "./sprites/exe/SulphurousSea/Sulflounder.gif", "mindepth": 30, "maxdepth": 100, "speed": 2.0, "direction": "left"},
+                {"sprite": "./sprites/exe/SulphurousSea/Trasher.gif", "mindepth": 30, "maxdepth": 100, "speed": 3.0, "direction": "right"},
+            ];
+
+            var abyss1 = [
+                {"sprite": "./sprites/exe/Abyss1/AquaticUrchin.gif", "mindepth": 100, "maxdepth": 200, "speed": 1.0, "direction": "random"},
+                {"sprite": "./sprites/exe/Abyss1/BabyCannonballJellyfish.gif", "mindepth": 100, "maxdepth": 200, "speed": 1.0, "direction": "random"},
+                {"sprite": "./sprites/exe/Abyss1/BoxJellyFish.gif", "mindepth": 100, "maxdepth": 200, "speed": 1.0, "direction": "random"},
+                {"sprite": "./sprites/exe/Abyss1/MorayEel.gif", "mindepth": 100, "maxdepth": 200, "speed": 1.0, "direction": "left"},
+                {"sprite": "./sprites/exe/Abyss1/Sulflounder.gif", "mindepth": 100, "maxdepth": 200, "speed": 2.0, "direction": "left"},
+                {"sprite": "./sprites/exe/Abyss1/ToxicMinnow.gif", "mindepth": 100, "maxdepth": 200, "speed": 2.0, "direction": "left"},
+            ];
+
+            var abyss2 = [
+                {"sprite": "./sprites/exe/Abyss2/ToxicMinnow.gif", "mindepth": 200, "maxdepth": 300, "speed": 2.0, "direction": "left"},
+                {"sprite": "./sprites/exe/Abyss2/Cuttlefish.gif", "mindepth": 200, "maxdepth": 300, "speed": 2.0, "direction": "left"},
+                {"sprite": "./sprites/exe/Abyss2/Laserfish.gif", "mindepth": 200, "maxdepth": 300, "speed": 2.0, "direction": "left"},
+                {"sprite": "./sprites/exe/Abyss2/LuminousCorvina.gif", "mindepth": 200, "maxdepth": 300, "speed": 3.0, "direction": "left"},
+                {"sprite": "./sprites/exe/Abyss2/Viperfish.gif", "mindepth": 200, "maxdepth": 300, "speed": 3.0, "direction": "left"},
+            ];
+
+            var abyss3 = [
+                {"sprite": "./sprites/exe/Abyss3/ChaoticPuffer.gif", "mindepth": 300, "maxdepth": 400, "speed": 1.0, "direction": "random"},
+                {"sprite": "./sprites/exe/Abyss3/DevilFish.gif", "mindepth": 300, "maxdepth": 400, "speed": 3.0, "direction": "left"},
+                {"sprite": "./sprites/exe/Abyss3/DevilFishAlt.gif", "mindepth": 300, "maxdepth": 400, "speed": 3.0, "direction": "left"},
+                {"sprite": "./sprites/exe/Abyss3/GiantSquid.gif", "mindepth": 300, "maxdepth": 400, "speed": 2.0, "direction": "random"},
+                {"sprite": "./sprites/exe/Abyss3/ColossalSquid.gif", "mindepth": 300, "maxdepth": 400, "speed": 2.0, "direction": "random"},
+                {"sprite": "./sprites/exe/Abyss3/Laserfish.gif", "mindepth": 300, "maxdepth": 400, "speed": 3.0, "direction": "left"},
+                {"sprite": "./sprites/exe/Abyss3/MirageJelly.gif", "mindepth": 300, "maxdepth": 400, "speed": 1.0, "direction": "random"},
+                {"sprite": "./sprites/exe/Abyss3/Viperfish.gif", "mindepth": 300, "maxdepth": 400, "speed": 3.0, "direction": "left"},
+            ];
+
+            var abyss4 = [
+                {"sprite": "./sprites/exe/Abyss4/Bloatfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 1.5, "direction": "left"},
+                {"sprite": "./sprites/exe/Abyss4/ColossalSquid.gif", "mindepth": 400, "maxdepth": 500, "speed": 2.0, "direction": "random"},
+                {"sprite": "./sprites/exe/Abyss4/ReaperShark.gif", "mindepth": 400, "maxdepth": 500, "speed": 3.0, "direction": "right"},
+                {"sprite": "./sprites/exe/Abyss4/ReaperSharkMan.gif", "mindepth": 400, "maxdepth": 500, "speed": 3.0, "direction": "right"},
+            ];
+
+            function addRandomFishFromPool(pool, quantity)
+            {
+                for(var i = 0; i < quantity; i++)
+                {
+                    
+                
+                    var selection = pool[(Math.round(Math.random() * (pool.length -1)))];
+                    console.log(selection);
+                    var depth = `${Math.random() * (selection.maxdepth - selection.mindepth) + selection.mindepth}vh`;
+                    var newFish = window.createFish(selection.sprite, depth, selection.speed, selection.direction);
+                    document.querySelector(".fish-container").insertAdjacentElement("beforeend", newFish);
+                }
+            }
+
+            addRandomFishFromPool(surface, 30);
+            addRandomFishFromPool(abyss1, 35);
+            addRandomFishFromPool(abyss2, 35);
+            addRandomFishFromPool(abyss3, 25);
+            addRandomFishFromPool(abyss4, 18);
+            
+        });
+    </script>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            document.querySelector(".fish-container").style.height = `${document.documentElement.scrollHeight}px`;
+        });
+    </script>
+
     <script src="./code/src/Fish.js" defer></script>
     <link rel="stylesheet" href="./css/Fish.css">
 
@@ -180,11 +254,13 @@
         </div>
 
         <div class="fish-container">
-            <Fish src="./sprites/exe/SulphurousSea/Trasher.gif" depth="10vh" speed="5.0" direction="right"></Fish>
-            <Fish src="./sprites/exe/SulphurousSea/Sulflounder.gif" depth="20vh" speed="2.0" direction="left"></Fish>
+            <hr style="margin-top: 100vh;">
+            <hr style="margin-top: 100vh;">
+            <hr style="margin-top: 100vh;">
+            <hr style="margin-top: 100vh;">
         </div>
 
-        <div style="height: 40vh"></div>
+        <div style="height: 35vh"></div>
 
         <div style="display: flex; flex-direction: row;">
             <AudioTile name="Surface Day" src="./audiosrc/terraria/SulphurousSeaDay.ogg" icon="fa-sun-haze" metaLeft="0 | Sulphurous Sea" metaRight="W | Wasteland"></AudioTile>
@@ -193,26 +269,26 @@
         </div>
         
 
-        <div style="height: 80vh"></div>
+        <div style="height: 75vh"></div>
 
         <div style="display: flex; flex-direction: row;">
             <AudioTile name="Abyss 1" src="./audiosrc/terraria/AbyssLayer1.ogg" icon="fa-wave" metaLeft="1 | Abyss Level 1 / Sulphuric Depths" metaRight="H | Hesitation"></AudioTile>
         </div>
 
-        <div style="height: 80vh"></div>
+        <div style="height: 75vh"></div>
 
         <div style="display: flex; flex-direction: row;">
             <AudioTile name="Abyss 2" src="./audiosrc/terraria/AbyssLayer2.ogg" icon="fa-mask-snorkel" metaLeft="2 | Abyss Level 2" metaRight="H | Hadopelagic Pressure"></AudioTile>
         </div>
 
-        <div style="height: 80vh"></div>
+        <div style="height: 75vh"></div>
 
         <div style="display: flex; flex-direction: row;">
             <AudioTile name="Abyss 3" src="./audiosrc/terraria/AbyssLayer3.ogg" icon="fa-pipe-collar" metaLeft="3 | Abyss Level 3 / The Thermal Vents" metaRight="H | Hydrothermophobia"></AudioTile>
             <AudioTile name="Abyss 3 (Alt)" src="./audiosrc/terraria/AbyssLayer3Alt.ogg" icon="fa-pipe-collar" metaLeft="3 | Abyss Level 3 / The Thermal Vents" metaRight="H | Hydrothermophobia"></AudioTile>
         </div>
 
-        <div style="height: 80vh"></div>
+        <div style="height: 75vh"></div>
 
         <div style="display: flex; flex-direction: row;">
             <AudioTile name="Abyss 4" src="./audiosrc/terraria/AbyssLayer4.ogg" icon="fa-stars" metaLeft="4 | Abyss Level 4 / The Void" metaRight="V | Void"></AudioTile>
