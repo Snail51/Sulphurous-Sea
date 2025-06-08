@@ -100,7 +100,7 @@ export class AudioNode {
         this.noise = await this.audioCtx.createGain();
         await this.source.connect(this.noise);
         this.noise.gain.setValueAtTime(0, this.audioCtx.currentTime); // start volume at 0, playing will slide to target
-        await this.noise.connect(window.amplifier);
+        await this.noise.connect(this.audioCtx.destination);
         this.loaded = 4;
 
         // start and immediately stop the node (make sure it is ready to go)
@@ -126,12 +126,10 @@ export class AudioNode {
                 element.style.backgroundColor = "#999999";
             }
             this.noise.gain.setValueAtTime(0, this.audioCtx.currentTime); // ensure immediate silence
-            await this.noise.connect(window.amplifier);
+            await this.noise.connect(this.audioCtx.destination);
             this.noise.gain.setTargetAtTime(this.volume, this.audioCtx.currentTime, 0.183); // return to target volume over 0.5 seconds (sliding) [why 0.183? - exponentially approaches target via timestamp https://webaudio.github.io/web-audio-api/#dom-audioparam-settargetattime]
             this.playing = true;
-            this.cloneToPlaying(); // add this node to the recently played list
             console.debug(`${this.src} - Started Playback of AudioNode`);
-            window.URIsaver.save();
         }
     }
 
@@ -158,7 +156,6 @@ export class AudioNode {
                 this.playing = false;
                 this.unlock(); // disconnection successful, re-enable interaction
                 console.debug(`${this.src} - Halted Playback of AudioNode`);
-                window.URIsaver.save();
             }, 1000);
         }
     }
@@ -269,28 +266,5 @@ export class AudioNode {
     async addPointer(element)
     {
         this.elements.push(element);
-    }
-
-    async cloneToPlaying()
-    {
-        var sample = Array.from(document.querySelectorAll(".audioContainer")).filter(node => node.audioNode ? node.audioNode.src === this.src : false)[0];
-        var alreadyRecent = Array.from(document.querySelectorAll("#recentGrid .audioContainer")).map(element => element.audioNode ? element.audioNode.src : "NULL SOURCE").some(source => source === this.src);
-        if(!alreadyRecent)
-        {
-            var clone = sample.cloneNode(true); // clone the node (DOM elements only)
-            sample.audioNode.addPointer(clone); // instantiate a pointer to the new element
-            clone.audioNode = sample.audioNode; // manually copy the audioNode reference property to the new element
-
-            // copy over event listeners
-            clone.querySelector("button").addEventListener("click", (event) => { clone.audioNode.toggle(event); });
-            clone.querySelector("input").addEventListener("input", (event) => clone.audioNode.adjustVolume(2 * ((event.target.value / 100) ** 3), event.target.value));
-            clone.querySelector("input").addEventListener("change", (event) => window.URIsaver.save());
-            
-            // insert the clone into the DOM in the <div> with id="recentGrid"
-            document.querySelector("#recentGrid").insertAdjacentElement("afterbegin", clone);
-
-            // unhide the recent / currently playing section
-            Array.from(document.querySelectorAll(".recentSection")).forEach((element, index) => { element.classList.remove("recentSection") });
-        }
     }
 }

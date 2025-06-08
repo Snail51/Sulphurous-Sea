@@ -6,6 +6,8 @@
     background-color: #555555;
     border: solid #222222;
     border-radius: 10px;
+    z-index: 6;
+    position: relative;
 }
 
 .audioButton {

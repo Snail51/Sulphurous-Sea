@@ -1,7 +1,7 @@
 import { AudioNode } from "./AudioNode.js";
 
 // initialization requires async steps so do a big `.then()` tree of this file
-setupGlobalAudioContext().then(() => setupGlobalAmplifier().then(() => window.setupAudioTiles()));
+setupGlobalAudioContext().then(() => window.setupAudioTiles());
 
 /**
  * Initialize a global AudioContext to `window.audioCTX`
@@ -9,31 +9,6 @@ setupGlobalAudioContext().then(() => setupGlobalAmplifier().then(() => window.se
 async function setupGlobalAudioContext() {
     window.audioCTX = new window.AudioContext();
     window.audioNodes = new Array();
-}
-
-/***
- * Set up a global Gain node that all audio nodes will run though for global volume control
- */
-async function setupGlobalAmplifier() {
-    window.amplifier = await window.audioCTX.createGain();
-    await window.amplifier.connect(window.audioCTX.destination);
-
-    window.adjustGlobalVolume = function () {
-        var newVolume = document.getElementById("globalVolume").value;
-        newVolume = newVolume / 100;
-        newVolume = newVolume * 2;
-        newVolume = newVolume.toFixed(2);
-        //console.debug(`Setting global volume to ${newVolume}`);
-        window.amplifier.gain.setValueAtTime(newVolume, window.audioCTX.currentTime);
-    }
-
-    window.storeGlobalVolume = function () {
-        var newVolume = document.getElementById("globalVolume").value;
-        localStorage.setItem("SWEET_DREAMS-global_volume", newVolume);
-    }
-
-    document.getElementById("globalVolume").value = localStorage.getItem("SWEET_DREAMS-global_volume") ? localStorage.getItem("SWEET_DREAMS-global_volume") : 50;
-    window.adjustGlobalVolume();
 }
 
 window.createAudioTile = async function (name, src, icon, metaLeft, metaRight)
@@ -92,7 +67,6 @@ window.createAudioTile = async function (name, src, icon, metaLeft, metaRight)
     newRange.type = "range";
     newRange.className = "SLIDER";
     newRange.addEventListener("input", (event) => window.audioNodes[constIndex].adjustVolume(2 * ((event.target.value / 100) ** 3), event.target.value));
-    newRange.addEventListener("change", () => window.URIsaver.save());
 
     // create new <p> for LABEL
     var newLabel = document.createElement("div");
