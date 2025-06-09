@@ -32,7 +32,7 @@ window.createFish = function (sprite, depth, speed=1.0, direction="right")
     newFish.setAttribute("swimDirection", direction);
 
     var vmin = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
-    newFish.style.transform += ` scale(${(vmin/480)}, ${vmin/480})`;
+    newFish.style.transform += ` scale(${(vmin/360)}, ${vmin/360})`;
 
     return newFish;
 }
