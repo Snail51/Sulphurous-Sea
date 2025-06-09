@@ -41,7 +41,7 @@ for base in $(ls | grep -oE '^([^_]+).png' | cut -d '.' -f 1 | sort -u); do
     fi
     
     # Create GIF with specified parameters
-    convert -delay ${delay} -loop 0 $files ${base}.gif
+    convert -delay ${delay} -loop 0 -dispose previous $files ${base}.gif
         
     echo "Created ${base}.gif"
 done

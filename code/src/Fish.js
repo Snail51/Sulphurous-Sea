@@ -25,6 +25,10 @@ window.createFish = function (sprite, depth, speed=1.0, direction="right")
             direction = "left";
         }
     }
+    if(direction == "left")
+    {
+        newFish.style.transform = "scaleX(-1)";
+    }
     newFish.setAttribute("swimDirection", direction);
 
     return newFish;
