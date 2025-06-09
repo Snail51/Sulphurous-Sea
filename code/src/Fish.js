@@ -11,8 +11,8 @@ window.createFish = function (sprite, depth, speed=1.0, direction="right")
     newFish.src = sprite;
     newFish.className = "fish";
     newFish.style.marginTop = `${(Number.parseFloat(depth)).toFixed(2)}vh`;
-    newFish.style.marginLeft = `${(Math.random() * window.innerWidth).toFixed(2)}%`;
-    newFish.setAttribute("swimSpeed", speed + (Math.random()-0.5));
+    newFish.setAttribute("swimSpeed", Number.parseFloat((speed + ((Math.random()-0.5)*speed)).toFixed(2))); // fish may go 50% faster or slower than the target speed
+    newFish.setAttribute("swimOffset", `${(Math.random() * Date.now()).toFixed(2)}px`)
     if(direction == "random")
     {
         var rand = Math.round(Math.random());
@@ -63,24 +63,24 @@ window.setupFish = function () {
         fish.remove();
     }
 
-    window.setInterval(() => { window.moveFish() }, 50);
+    window.setInterval(() => { window.moveFish() }, 50); // recalculate fish position every this many ms
 }
 
 window.moveFish = function () {
+    const now = Date.now(); // calc just once to improve efficiency
+    const width = window.innerWidth; // calc just once to improve efficiency
+
     Array.from(document.querySelectorAll(".fish")).forEach((element, index) => {
-        var currentOffset = Number.parseFloat(element.style.marginLeft);
+        var swimOffset = Number.parseFloat(element.getAttribute("swimOffset"));
         var swimSpeed = Number.parseFloat(element.getAttribute("swimSpeed"));
         var swimDirection = element.getAttribute("swimDirection") == "right" ? 1 : -1;
 
-        var newOffset = !isNaN(currentOffset) ? currentOffset + (swimSpeed * swimDirection) : 0.5;
+        var newOffset = (((now+swimOffset)/(1000/swimSpeed)) % (width * 1.4)) - (width * 0.2);
 
-        if(newOffset > 1.2 * window.innerWidth)
+        // if swimming to the left (-1), take the difference from width*1 to invert it
+        if(swimDirection === -1)
         {
-            newOffset -= 1.39 * window.innerWidth;
-        }
-        if(newOffset < -0.2 * window.innerWidth)
-        {
-            newOffset += 1.39 * window.innerWidth;
+            newOffset = (width * 1) - newOffset;
         }
 
         element.style.marginLeft = `${newOffset}px`;
