@@ -166,7 +166,7 @@ export class AudioNode {
         // only do this check if this is toggle from an event... not if toggled manually
         if(event)
         {
-            if(!(performance.timing.navigationStart + event.timeStamp + 250 >= Date.now()))
+            if(!(performance.timing.navigationStart + event.timeStamp + 500 >= Date.now()))
             {
                 console.debug("Alert blocked execution for too long. Aborting.");
                 return;

@@ -1,327 +1,163 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset='utf-8'>
-    <title>Sulphurous Sea</title>
-    <link rel="icon" href="./img/SulphurBG.png" type="image/x-icon">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <head>
+        <meta charset='utf-8'>
+        <title>Sulphurous Sea</title>
+        <link rel="icon" href="./img/SulphurBG.png" type="image/x-icon">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-    <title>Sulphurous Sea</title>
-    <meta charset="utf-8">
-    <meta name="description" content="Explore the depths of the Sulfuric Sea">
-    <meta name="keywords" content="terraria,ambient,vanity,sounds,music,rest,relax">
+        <title>Sulphurous Sea</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Explore the depths of the Sulphurous Sea">
+        <meta name="keywords" content="terraria,ambient,vanity,sounds,music,rest,relax">
 
-    <meta property="og:title" content="Sulphurous Sea">
-    <meta property="og:description" content="Explore the depths of the Sulfuric Sea">
-    <meta property="og:site_name" content="Snailien Concepts">
-    <meta property="og:url" content="tools.snailien.net">
-    <meta property="og:image" content="./img/SulphurBG.png">
+        <meta property="og:title" content="Sulphurous Sea">
+        <meta property="og:description" content="Explore the depths of the Sulphurous Sea">
+        <meta property="og:site_name" content="Snailien Concepts">
+        <meta property="og:url" content="tools.snailien.net">
+        <meta property="og:image" content="./img/SulphurBG.png">
 
-    <meta itemprop="name" content="Sulphurous Sea">
-    <meta itemprop="description" content="Explore the depths of the Sulfuric Sea">
-    <meta itemprop="image" content="./img/SulphurBG.png">
+        <meta itemprop="name" content="Sulphurous Sea">
+        <meta itemprop="description" content="Explore the depths of the Sulphurous Sea">
+        <meta itemprop="image" content="./img/SulphurBG.png">
 
-    <meta name="twitter:card" content="Explore the depths of the Sulfuric Sea">
-    <meta name="twitter:url" content="tools.snailien.net">
-    <meta name="twitter:title" content="Sulphurous Sea">
-    <meta name="twitter:description" content="Explore the depths of the Sulfuric Sea">
-    <meta name="twitter:image" content="./img/SulphurBG.png">
+        <meta name="twitter:card" content="Explore the depths of the Sulphurous Sea">
+        <meta name="twitter:url" content="tools.snailien.net">
+        <meta name="twitter:title" content="Sulphurous Sea">
+        <meta name="twitter:description" content="Explore the depths of the Sulphurous Sea">
+        <meta name="twitter:image" content="./img/SulphurBG.png">
 
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="./fontawesome/all.css">
+        <!-- FontAwesome Icons -->
+        <link rel="stylesheet" href="./fontawesome/all.css">
 
-    <!-- AudioTiles -->
-    <link rel="stylesheet" href="./css/AudioTile.css">
+        <!-- <a> Styling -->
+        <link rel="stylesheet" href="./css/Links.css">
 
-    <!-- Title Fading Logic -->
-    <link rel="stylesheet" href="./css/TitleFade.css">
+        <!-- Dawn Chorus Font -->
+        <link rel="stylesheet" href="./fonts/DawnChorus.css">
 
-    <!-- <a> Styling -->
-    <link rel="stylesheet" href="./css/Links.css">
+        <!-- AudioTiles -->
+        <link rel="stylesheet" href="./css/AudioTile.css">
+        <script type="module" src="./code/exe/AudioTile.js"></script>
+        <script src="./code/exe/Tooltip.js"></script>
 
-    <!-- Recent / Currently Playing hider -->
-    <link rel="stylesheet" href="./css/RecentSection.css">
+        <!-- Title Fading Logic -->
+        <link rel="stylesheet" href="./css/TitleFade.css">
+        <script>
+            window.fadeTitle = function () {
+                document.getElementById("title").classList.toggle("fade");
+            }
+        </script>
 
-    <!-- Dawn Chorus Font -->
-    <link rel="stylesheet" href="./fonts/DawnChorus.css">
+        <!-- Background Scrolling Logic -->
+        <link rel="stylesheet" href="./css/ScrollBackground.css">
+        <script src="./code/exe/ScrollBackground.js"></script>
 
-    <!-- Consumes custom <AudioTile> elements and initializes all their logic and DOM elements (as well as the global amplifier) -->
-    <script type="module" src="./code/src/AudioTile.js" defer></script>
+        <!-- Instantiate and control <Fish> elements -->
+        <script src="./code/exe/Fish.js" defer></script>
+        <link rel="stylesheet" href="./css/Fish.css">
 
-    <!-- Main Application Styling -->
-    <style>
-        .background-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: -1;
-        }
-
-        .background-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0;
-            transition: opacity 2.0s ease-out;
-            will-change: opacity;
-        }
-
-        .background-layer.active {
-            opacity: 1;
-        }
-    </style>
-
-    <style>
-        h2 {
-            height: 10vh;
-            margin: 0px;
-        }
-
-        audio {
-            height: 10vh;
-            margin: 0px;
-        }
-    </style>
-
-    <!-- Title -> Content Initalization -->
-    <script>
-        window.fadeTitle = function () {
-            document.getElementById("title").classList.toggle("fade");
-        }
-    </script>
-
-    <script>
-        const updateBackground = () => {
-            const scrollPosition = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const progress = scrollPosition / windowHeight;
-
-
-
-            // Activate appropriate layer
-            document.querySelectorAll('.background-layer').forEach((layer, index) => {
-                if (Math.abs(index - progress) < 0.5) {
-                    layer.classList.add('active');
-                    console.debug({
-                        "scrollPosition": ((Math.round(scrollPosition * 100)) / 100),
-                        "progress": ((Math.round(progress * 100)) / 100),
-                        "active": layer.style.backgroundImage,
-                    });
-                } else {
-                    layer.classList.remove('active');
-                }
+        <!-- Control for `window.moveFish()` Interval. Uses `window.fishMoveInterval`. -->
+        <script>
+            window.changeFPS = function() {
+                window.fishMoveInterval ? window.clearInterval(window.fishMoveInterval) : void 0;
+                window.fishMoveInterval = window.setInterval(() => { window.moveFish() }, 1000 / document.getElementById("framerate").value);
+                document.getElementById("fpsnum").textContent = `${document.getElementById("framerate").value}fps`;
+            }
+            window.addEventListener("DOMContentLoaded", () => {
+                window.changeFPS();
             });
+        </script>
 
-        };
+    </head>
 
-        // Throttle scroll events
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    updateBackground();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        });
-    </script>
+    <body style="background-color: black; color: whitesmoke; font-size: 4vmin;">
 
-    <script>
-        window.addEventListener("DOMContentLoaded", () => {
+        <!-- Title page overlays all until dismissed -->
+        <div id="title" class="title">
+            <br>
+            <a target="_blank" href="https://steamcommunity.com/sharedfiles/filedetails/?id=2824688072"
+                style="object-fit: contain;">
+                <img src="./img/Site-logo.png">
+            </a>
 
-            var debug = [
-                {"sprite": "./sprites/exe/SulphurousSea/Trasher.gif", "mindepth": 75, "maxdepth": 100, "speed": 50.0, "direction": "left"},
-            ]
+            <hr>
 
-            var surface = [
-                {"sprite": "./sprites/exe/SulphurousSea/Toxicatfish.gif", "mindepth": 30, "maxdepth": 100, "speed": 30.0, "direction": "random"},
-                {"sprite": "./sprites/exe/SulphurousSea/AquaticUrchin.gif", "mindepth": 30, "maxdepth": 100, "speed": 10.0, "direction": "random"},
-                {"sprite": "./sprites/exe/SulphurousSea/Sulflounder.gif", "mindepth": 30, "maxdepth": 100, "speed": 20.0, "direction": "random"},
-                {"sprite": "./sprites/exe/SulphurousSea/Trasher.gif", "mindepth": 30, "maxdepth": 100, "speed": 30.0, "direction": "random"},
-            ];
+            <p>
+                A Vanity webpage based on the <a target="_blank"
+                    href="https://calamitymod.wiki.gg/wiki/Sulphurous_Sea">Sulphurous Sea</a> and <a target="_blank"
+                    href="https://calamitymod.wiki.gg/wiki/Abyss">Abyss</a> from the <a target="_blank"
+                    href="https://steamcommunity.com/sharedfiles/filedetails/?id=2824688072">Calamity Mod</a> for <a
+                    target="_blank" href="https://store.steampowered.com/app/105600/">Terraria</a>
+            </p>
 
-            var abyss1 = [
-                {"sprite": "./sprites/exe/Abyss1/AquaticUrchin.gif", "mindepth": 100, "maxdepth": 200, "speed": 10.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss1/BabyCannonballJellyfish.gif", "mindepth": 100, "maxdepth": 200, "speed": 10.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss1/BoxJellyfish.gif", "mindepth": 100, "maxdepth": 200, "speed": 10.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss1/MorayEel.gif", "mindepth": 100, "maxdepth": 200, "speed": 20.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss1/Sulflounder.gif", "mindepth": 100, "maxdepth": 200, "speed": 20.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss1/ToxicMinnow.gif", "mindepth": 100, "maxdepth": 200, "speed": 20.0, "direction": "random"},
-            ];
+            <button onclick="window.fadeTitle()">Submerge</button>
+        </div>
+        <div id="content" class="content">
 
-            var abyss2 = [
-                {"sprite": "./sprites/exe/Abyss2/ToxicMinnow.gif", "mindepth": 200, "maxdepth": 300, "speed": 20.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss2/Cuttlefish.gif", "mindepth": 200, "maxdepth": 300, "speed": 20.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss2/Laserfish.gif", "mindepth": 200, "maxdepth": 300, "speed": 20.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss2/LuminousCorvina.gif", "mindepth": 200, "maxdepth": 300, "speed": 30.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss2/Viperfish.gif", "mindepth": 200, "maxdepth": 300, "speed": 30.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss2/Oarfish.gif", "mindepth": 200, "maxdepth": 300, "speed": 20.0, "direction": "random"},
-            ];
+            <div>
+                <label for="framerate"><b>FPS:</b></label>
+                <input id="framerate" type="range" min="1" max="60" value="20" step="1" onchange="window.changeFPS()">
+                <label for="framerate" id="fpsnum"></label>
+            </div>
 
-            var abyss3 = [
-                {"sprite": "./sprites/exe/Abyss3/ChaoticPuffer.gif", "mindepth": 300, "maxdepth": 400, "speed": 10.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss3/DevilFish.gif", "mindepth": 300, "maxdepth": 400, "speed": 30.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss3/GiantSquid.gif", "mindepth": 300, "maxdepth": 400, "speed": 20.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss3/ColossalSquid.gif", "mindepth": 300, "maxdepth": 400, "speed": 20.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss3/Laserfish.gif", "mindepth": 300, "maxdepth": 400, "speed": 30.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss3/MirageJelly.gif", "mindepth": 300, "maxdepth": 400, "speed": 10.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss3/Viperfish.gif", "mindepth": 300, "maxdepth": 400, "speed": 30.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss3/Oarfish.gif", "mindepth": 300, "maxdepth": 400, "speed": 20.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss3/GulperEel.gif", "mindepth": 300, "maxdepth": 400, "speed": 30.0, "direction": "random"},
-            ];
+            <div class="background-container">
+                <div class="background-layer active"
+                    style="background-image: url('./img/SulphurSeaSurfaceClose.png'); background-position: top;"></div>
+                <div class="background-layer"
+                    style="background-image: url('./img/AbyssBGLayer1.png'); background-position: top;"></div>
+                <div class="background-layer"
+                    style="background-image: url('./img/AbyssBGLayer2.png'); background-position: center;"></div>
+                <div class="background-layer"
+                    style="background-image: url('./img/AbyssBGLayer3.png'); background-position: center;"></div>
+                <div class="background-layer"
+                    style="background-image: url('./img/AbyssBGLayer4.png'); background-position: bottom;"></div>
+            </div>
 
-            var abyss4 = [
-                {"sprite": "./sprites/exe/Abyss4/Bloatfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 10.5, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss4/Bloatfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 10.5, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss4/Bloatfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 10.5, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss4/Bloatfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 10.5, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss4/ColossalSquid.gif", "mindepth": 400, "maxdepth": 500, "speed": 20.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss4/ReaperShark.gif", "mindepth": 400, "maxdepth": 500, "speed": 30.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss4/GulperEel.gif", "mindepth": 400, "maxdepth": 500, "speed": 30.0, "direction": "random"},
-                {"sprite": "./sprites/exe/Abyss4/EidolonWyrm.gif", "mindepth": 400, "maxdepth": 500, "speed": 30.0, "direction": "random"},
-            ];
+            <div class="fish-container">
+                <hr style="margin-top: 100vh;">
+                <hr style="margin-top: 100vh;">
+                <hr style="margin-top: 100vh;">
+                <hr style="margin-top: 100vh;">
+            </div>
+
+            <div style="height: 35vh"></div>
+
+            <div style="display: flex; flex-direction: row;">
+                <AudioTile name="Surface Day" src="./audiosrc/terraria/SulphurousSeaDay.ogg" icon="fa-sun-haze" metaLeft="0 | Sulphurous Sea" metaRight="W | Wasteland"></AudioTile>
+                <AudioTile name="Surface Night" src="./audiosrc/terraria/SulphurousSeaNight.ogg" icon="fa-cloud-fog" metaLeft="0 | Sulphurous Sea" metaRight="C | Caustic Tides"></AudioTile>
+                <AudioTile name="Surface Rain" src="./audiosrc/terraria/SulphurousSeaRain.ogg" icon="fa-sun-dust" metaLeft="0 | Sulphurous Sea" metaRight="S | Septication"></AudioTile>
+            </div>
             
-            function addRandomFishFromPool(pool, quantity)
-            {
-                for(var i = 0; i < quantity; i++)
-                {
-                    var selection = pool[(Math.round(Math.random() * (pool.length -1)))];
-                    console.log(selection);
-                    var depth = `${Math.random() * (selection.maxdepth - selection.mindepth) + selection.mindepth}vh`;
-                    var newFish = window.createFish(selection.sprite, depth, selection.speed, selection.direction);
-                    document.querySelector(".fish-container").insertAdjacentElement("beforeend", newFish);
-                }
-            }
 
-            //addRandomFishFromPool(debug, 10);
-            addRandomFishFromPool(surface, 30);
-            addRandomFishFromPool(abyss1, 35);
-            addRandomFishFromPool(abyss2, 25);
-            addRandomFishFromPool(abyss3, 17);
-            addRandomFishFromPool(abyss4, 15);
-            
-        });
-    </script>
+            <div style="height: 75vh"></div>
 
-    <script>
-        window.addEventListener("DOMContentLoaded", () => {
-            document.querySelector(".fish-container").style.height = `${document.documentElement.scrollHeight}px`;
-        });
-    </script>
+            <div style="display: flex; flex-direction: row;">
+                <AudioTile name="Abyss 1" src="./audiosrc/terraria/AbyssLayer1.ogg" icon="fa-wave" metaLeft="1 | Abyss Level 1 / Sulphuric Depths" metaRight="H | Hesitation"></AudioTile>
+            </div>
 
-    <script>
-        window.changeFPS = function() {
-            window.fishMoveInterval ? window.clearInterval(window.fishMoveInterval) : void 0;
-            window.fishMoveInterval = window.setInterval(() => { window.moveFish() }, 1000 / document.getElementById("framerate").value);
-            document.getElementById("fpsnum").textContent = `${document.getElementById("framerate").value}fps`;
-        }
-        window.addEventListener("DOMContentLoaded", () => {
-            window.changeFPS();
-        });
-    </script>
+            <div style="height: 75vh"></div>
 
-    <script src="./code/src/Fish.js" defer></script>
-    <link rel="stylesheet" href="./css/Fish.css">
+            <div style="display: flex; flex-direction: row;">
+                <AudioTile name="Abyss 2" src="./audiosrc/terraria/AbyssLayer2.ogg" icon="fa-mask-snorkel" metaLeft="2 | Abyss Level 2" metaRight="H | Hadopelagic Pressure"></AudioTile>
+            </div>
 
-    <!-- Debug background color assistant for elemnt boundary checking -->
-    <script src="./code/exe/debugRandomColors.js"></script>
-</head>
+            <div style="height: 75vh"></div>
 
-<body style="background-color: black; color: whitesmoke; font-size: 4vmin;">
+            <div style="display: flex; flex-direction: row;">
+                <AudioTile name="Abyss 3" src="./audiosrc/terraria/AbyssLayer3.ogg" icon="fa-pipe-collar" metaLeft="3 | Abyss Level 3 / The Thermal Vents" metaRight="H | Hydrothermophobia"></AudioTile>
+                <AudioTile name="Abyss 3 (Alt)" src="./audiosrc/terraria/AbyssLayer3Alt.ogg" icon="fa-pipe-collar" metaLeft="3 | Abyss Level 3 / The Thermal Vents" metaRight="H | Hydrothermophobia"></AudioTile>
+            </div>
 
-    <!-- Title page overlays all until dismissed -->
-    <div id="title" class="title">
-        <br>
-        <a target="_blank" href="https://steamcommunity.com/sharedfiles/filedetails/?id=2824688072"
-            style="object-fit: contain;">
-            <img src="./img/Site-logo.png">
-        </a>
+            <div style="height: 75vh"></div>
 
-        <hr>
+            <div style="display: flex; flex-direction: row;">
+                <AudioTile name="Abyss 4" src="./audiosrc/terraria/AbyssLayer4.ogg" icon="fa-stars" metaLeft="4 | Abyss Level 4 / The Void" metaRight="V | Void"></AudioTile>
+            </div>
 
-        <p>
-            A Vanity webpage based on the <a target="_blank"
-                href="https://calamitymod.wiki.gg/wiki/Sulphurous_Sea">Sulphurous Sea</a> and <a target="_blank"
-                href="https://calamitymod.wiki.gg/wiki/Abyss">Abyss</a> from the <a target="_blank"
-                href="https://steamcommunity.com/sharedfiles/filedetails/?id=2824688072">Calamity Mod</a> for <a
-                target="_blank" href="https://store.steampowered.com/app/105600/">Terraria</a>
-        </p>
-
-        <button onclick="window.fadeTitle()">Submerge</button>
-    </div>
-    <div id="content" class="content">
-
-        <div>
-            <label for="framerate"><b>FPS:</b></label>
-            <input id="framerate" type="range" min="1" max="60" value="20" step="1" onchange="window.changeFPS()">
-            <label for="framerate" id="fpsnum"></label>
+            <div style="height: 50vh"></div>
         </div>
-
-        <div class="background-container">
-            <div class="background-layer active"
-                style="background-image: url('./img/SulphurSeaSurfaceClose.png'); background-position: top;"></div>
-            <div class="background-layer"
-                style="background-image: url('./img/AbyssBGLayer1.png'); background-position: top;"></div>
-            <div class="background-layer"
-                style="background-image: url('./img/AbyssBGLayer2.png'); background-position: center;"></div>
-            <div class="background-layer"
-                style="background-image: url('./img/AbyssBGLayer3.png'); background-position: center;"></div>
-            <div class="background-layer"
-                style="background-image: url('./img/AbyssBGLayer4.png'); background-position: bottom;"></div>
-        </div>
-
-        <div class="fish-container">
-            <hr style="margin-top: 100vh;">
-            <hr style="margin-top: 100vh;">
-            <hr style="margin-top: 100vh;">
-            <hr style="margin-top: 100vh;">
-        </div>
-
-        <div style="height: 35vh"></div>
-
-        <div style="display: flex; flex-direction: row;">
-            <AudioTile name="Surface Day" src="./audiosrc/terraria/SulphurousSeaDay.ogg" icon="fa-sun-haze" metaLeft="0 | Sulphurous Sea" metaRight="W | Wasteland"></AudioTile>
-            <AudioTile name="Surface Night" src="./audiosrc/terraria/SulphurousSeaNight.ogg" icon="fa-cloud-fog" metaLeft="0 | Sulphurous Sea" metaRight="C | Caustic Tides"></AudioTile>
-            <AudioTile name="Surface Rain" src="./audiosrc/terraria/SulphurousSeaRain.ogg" icon="fa-sun-dust" metaLeft="0 | Sulphurous Sea" metaRight="S | Septication"></AudioTile>
-        </div>
-        
-
-        <div style="height: 75vh"></div>
-
-        <div style="display: flex; flex-direction: row;">
-            <AudioTile name="Abyss 1" src="./audiosrc/terraria/AbyssLayer1.ogg" icon="fa-wave" metaLeft="1 | Abyss Level 1 / Sulphuric Depths" metaRight="H | Hesitation"></AudioTile>
-        </div>
-
-        <div style="height: 75vh"></div>
-
-        <div style="display: flex; flex-direction: row;">
-            <AudioTile name="Abyss 2" src="./audiosrc/terraria/AbyssLayer2.ogg" icon="fa-mask-snorkel" metaLeft="2 | Abyss Level 2" metaRight="H | Hadopelagic Pressure"></AudioTile>
-        </div>
-
-        <div style="height: 75vh"></div>
-
-        <div style="display: flex; flex-direction: row;">
-            <AudioTile name="Abyss 3" src="./audiosrc/terraria/AbyssLayer3.ogg" icon="fa-pipe-collar" metaLeft="3 | Abyss Level 3 / The Thermal Vents" metaRight="H | Hydrothermophobia"></AudioTile>
-            <AudioTile name="Abyss 3 (Alt)" src="./audiosrc/terraria/AbyssLayer3Alt.ogg" icon="fa-pipe-collar" metaLeft="3 | Abyss Level 3 / The Thermal Vents" metaRight="H | Hydrothermophobia"></AudioTile>
-        </div>
-
-        <div style="height: 75vh"></div>
-
-        <div style="display: flex; flex-direction: row;">
-            <AudioTile name="Abyss 4" src="./audiosrc/terraria/AbyssLayer4.ogg" icon="fa-stars" metaLeft="4 | Abyss Level 4 / The Void" metaRight="V | Void"></AudioTile>
-        </div>
-
-        <div style="height: 50vh"></div>
-    </div>
-</body>
+    </body>
 
 </html>

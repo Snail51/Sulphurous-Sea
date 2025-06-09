@@ -1,47 +1,81 @@
-// initialization requires async steps so do a big `.then()` tree of this file
-
+// runtime initialization
 window.addEventListener("DOMContentLoaded", () => {
-    console.log("setting up fish now");
-    window.setupFish();
+
+    // setup static <Fish>
+    console.log("Initializing all static <Fish>");
+    window.setupStaticFish();
+    console.debug("All static <Fish> initialized.");
+
+    // make sure the fish container is the size of the document
+    document.querySelector(".fish-container").style.height = `${document.documentElement.scrollHeight}px`;
+
+    // set up <Fish> dynamically from instantiation script
+    window.setupDynamicFish();
 });
 
-window.createFish = function (sprite, depth, speed=1.0, direction="right")
-{
+/**
+ * create the <img> that represents a fish object, set it up, and return it.
+ * @param {string} sprite - URI reference to animated sprite (.gif)
+ * @param {string} depth - distance down the document to place the sprite (given as `#vh`)
+ * @param {float} speed - how much the object should move relative to the current time. Unit label N/A.
+ * @param {string} direction - controls the direction the object will move. Available options: ["right", "left", "random"]
+ * @returns {element} - <img class="fish"> with all attributes and styles set
+ */
+window.createFish = function (sprite, depth, speed = 1.0, direction = "right") {
     var newFish = document.createElement("img");
     newFish.src = sprite;
     newFish.className = "fish";
     newFish.style.marginTop = `${(Number.parseFloat(depth)).toFixed(2)}vh`;
-    newFish.setAttribute("swimSpeed", Number.parseFloat((speed + ((Math.random()-0.5)*speed)).toFixed(2))); // fish may go 50% faster or slower than the target speed
+    newFish.setAttribute("swimSpeed", Number.parseFloat((speed + ((Math.random() - 0.5) * speed)).toFixed(2))); // fish may go 50% faster or slower than the target speed
     newFish.setAttribute("swimOffset", `${(Math.random() * Date.now()).toFixed(2)}px`)
-    if(direction == "random")
-    {
+    if (direction == "random") {
         var rand = Math.round(Math.random());
-        if( rand == 0 )
-        {
+        if (rand == 0) {
             direction = "right";
         }
-        else
-        {
+        else {
             direction = "left";
         }
     }
-    if(direction == "left")
-    {
+    if (direction == "left") {
         newFish.style.transform = "scaleX(-1)";
     }
     newFish.setAttribute("swimDirection", direction);
 
     var vmin = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
-    newFish.style.transform += ` scale(${(vmin/360)}, ${vmin/360})`;
+    newFish.style.transform += ` scale(${(vmin / 360)}, ${vmin / 360})`;
 
     return newFish;
+}
+
+/**
+ * find all elements on the document with class ".fish" and move them based on the element's attribute and the current time
+ */
+window.moveFish = function () {
+    const now = Date.now(); // calc just once to improve efficiency
+    const width = window.innerWidth; // calc just once to improve efficiency
+
+    Array.from(document.querySelectorAll(".fish")).forEach((element, index) => {
+        var swimOffset = Number.parseFloat(element.getAttribute("swimOffset"));
+        var swimSpeed = Number.parseFloat(element.getAttribute("swimSpeed"));
+        var swimDirection = element.getAttribute("swimDirection") == "right" ? 1 : -1;
+
+        var newOffset = (((now + swimOffset) / (1000 / swimSpeed)) % (width * 1.4)) - (width * 0.2);
+
+        // if swimming to the left (-1), take the difference from width*1 to invert it
+        if (swimDirection === -1) {
+            newOffset = (width * 1) - newOffset;
+        }
+
+        element.style.marginLeft = `${newOffset}px`;
+    });
 }
 
 /**
  * Parse the DOM and consume all custom <AudioTile> elements
  * The DOM elements of the <AudioTile> are populated, and an internal `AudioNode` is setup
  */
-window.setupFish = function () {
+window.setupStaticFish = function () {
     var fishes = document.querySelectorAll("Fish");
     for (var fish of fishes) {
 
@@ -64,23 +98,76 @@ window.setupFish = function () {
     }
 }
 
-window.moveFish = function () {
-    const now = Date.now(); // calc just once to improve efficiency
-    const width = window.innerWidth; // calc just once to improve efficiency
+/**
+ * Runtime instantiation function to populate the document with various random fish with different speeds/depths based on a dictionary of allowed values
+ */
+window.setupDynamicFish = function () {
+    var debug = [
+        { "sprite": "./sprites/exe/SulphurousSea/Trasher.gif", "mindepth": 75, "maxdepth": 100, "speed": 50.0, "direction": "left" },
+    ]
 
-    Array.from(document.querySelectorAll(".fish")).forEach((element, index) => {
-        var swimOffset = Number.parseFloat(element.getAttribute("swimOffset"));
-        var swimSpeed = Number.parseFloat(element.getAttribute("swimSpeed"));
-        var swimDirection = element.getAttribute("swimDirection") == "right" ? 1 : -1;
+    var surface = [
+        { "sprite": "./sprites/exe/SulphurousSea/Toxicatfish.gif", "mindepth": 30, "maxdepth": 100, "speed": 30.0, "direction": "random" },
+        { "sprite": "./sprites/exe/SulphurousSea/AquaticUrchin.gif", "mindepth": 30, "maxdepth": 100, "speed": 10.0, "direction": "random" },
+        { "sprite": "./sprites/exe/SulphurousSea/Sulflounder.gif", "mindepth": 30, "maxdepth": 100, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/SulphurousSea/Trasher.gif", "mindepth": 30, "maxdepth": 100, "speed": 30.0, "direction": "random" },
+    ];
 
-        var newOffset = (((now+swimOffset)/(1000/swimSpeed)) % (width * 1.4)) - (width * 0.2);
+    var abyss1 = [
+        { "sprite": "./sprites/exe/Abyss1/AquaticUrchin.gif", "mindepth": 100, "maxdepth": 200, "speed": 10.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss1/BabyCannonballJellyfish.gif", "mindepth": 100, "maxdepth": 200, "speed": 10.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss1/BoxJellyfish.gif", "mindepth": 100, "maxdepth": 200, "speed": 10.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss1/MorayEel.gif", "mindepth": 100, "maxdepth": 200, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss1/Sulflounder.gif", "mindepth": 100, "maxdepth": 200, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss1/ToxicMinnow.gif", "mindepth": 100, "maxdepth": 200, "speed": 20.0, "direction": "random" },
+    ];
 
-        // if swimming to the left (-1), take the difference from width*1 to invert it
-        if(swimDirection === -1)
-        {
-            newOffset = (width * 1) - newOffset;
+    var abyss2 = [
+        { "sprite": "./sprites/exe/Abyss2/ToxicMinnow.gif", "mindepth": 200, "maxdepth": 300, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss2/Cuttlefish.gif", "mindepth": 200, "maxdepth": 300, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss2/Laserfish.gif", "mindepth": 200, "maxdepth": 300, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss2/LuminousCorvina.gif", "mindepth": 200, "maxdepth": 300, "speed": 30.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss2/Viperfish.gif", "mindepth": 200, "maxdepth": 300, "speed": 30.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss2/Oarfish.gif", "mindepth": 200, "maxdepth": 300, "speed": 20.0, "direction": "random" },
+    ];
+
+    var abyss3 = [
+        { "sprite": "./sprites/exe/Abyss3/ChaoticPuffer.gif", "mindepth": 300, "maxdepth": 400, "speed": 10.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss3/DevilFish.gif", "mindepth": 300, "maxdepth": 400, "speed": 30.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss3/GiantSquid.gif", "mindepth": 300, "maxdepth": 400, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss3/ColossalSquid.gif", "mindepth": 300, "maxdepth": 400, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss3/Laserfish.gif", "mindepth": 300, "maxdepth": 400, "speed": 30.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss3/MirageJelly.gif", "mindepth": 300, "maxdepth": 400, "speed": 10.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss3/Viperfish.gif", "mindepth": 300, "maxdepth": 400, "speed": 30.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss3/Oarfish.gif", "mindepth": 300, "maxdepth": 400, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss3/GulperEel.gif", "mindepth": 300, "maxdepth": 400, "speed": 30.0, "direction": "random" },
+    ];
+
+    var abyss4 = [
+        { "sprite": "./sprites/exe/Abyss4/Bloatfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 10.5, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/Bloatfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 10.5, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/Bloatfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 10.5, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/Bloatfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 10.5, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/ColossalSquid.gif", "mindepth": 400, "maxdepth": 500, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/ReaperShark.gif", "mindepth": 400, "maxdepth": 500, "speed": 30.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/GulperEel.gif", "mindepth": 400, "maxdepth": 500, "speed": 30.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/EidolonWyrm.gif", "mindepth": 400, "maxdepth": 500, "speed": 30.0, "direction": "random" },
+    ];
+
+    function addRandomFishFromPool(pool, quantity) {
+        for (var i = 0; i < quantity; i++) {
+            var selection = pool[(Math.round(Math.random() * (pool.length - 1)))];
+            console.log(selection);
+            var depth = `${Math.random() * (selection.maxdepth - selection.mindepth) + selection.mindepth}vh`;
+            var newFish = window.createFish(selection.sprite, depth, selection.speed, selection.direction);
+            document.querySelector(".fish-container").insertAdjacentElement("beforeend", newFish);
         }
+    }
 
-        element.style.marginLeft = `${newOffset}px`;
-    });
+    //addRandomFishFromPool(debug, 10);
+    addRandomFishFromPool(surface, 30);
+    addRandomFishFromPool(abyss1, 35);
+    addRandomFishFromPool(abyss2, 25);
+    addRandomFishFromPool(abyss3, 17);
+    addRandomFishFromPool(abyss4, 15);
 }
