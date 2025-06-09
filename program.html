@@ -180,17 +180,16 @@
                 {"sprite": "./sprites/exe/Abyss4/ReaperShark.gif", "mindepth": 400, "maxdepth": 500, "speed": 3.0, "direction": "random"},
             ];
 
-            function addRandomFishFromPool(pool, quantity)
+            async function addRandomFishFromPool(pool, quantity)
             {
                 for(var i = 0; i < quantity; i++)
                 {
-                    
-                
                     var selection = pool[(Math.round(Math.random() * (pool.length -1)))];
                     console.log(selection);
                     var depth = `${Math.random() * (selection.maxdepth - selection.mindepth) + selection.mindepth}vh`;
                     var newFish = window.createFish(selection.sprite, depth, selection.speed, selection.direction);
                     document.querySelector(".fish-container").insertAdjacentElement("beforeend", newFish);
+                    await new Promise(resolve => setTimeout(resolve, 43));
                 }
             }
 
