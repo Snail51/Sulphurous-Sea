@@ -2,7 +2,7 @@
     position: absolute;
     width: 100%;
     overflow-x: hidden;
-    overflow-y: visible;
+    overflow-y: hidden;
     pointer-events: none;
     top: 0px;
     left: 0px;
