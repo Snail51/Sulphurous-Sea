@@ -27,7 +27,7 @@ window.createFish = function (sprite, depth, speed = 1.0, direction = "right") {
     newFish.className = "fish";
     newFish.style.marginTop = `${(Number.parseFloat(depth)).toFixed(2)}vh`;
     newFish.setAttribute("swimSpeed", Number.parseFloat((speed + ((Math.random() - 0.5) * speed)).toFixed(2))); // fish may go 50% faster or slower than the target speed
-    newFish.setAttribute("swimOffset", `${(Math.random() * Date.now()).toFixed(2)}px`)
+    newFish.setAttribute("swimOffset", `${Number.parseFloat(Math.random().toFixed(2))}`)
     if (direction == "random") {
         var rand = Math.round(Math.random());
         if (rand == 0) {
@@ -60,7 +60,7 @@ window.moveFish = function () {
         var swimSpeed = Number.parseFloat(element.getAttribute("swimSpeed"));
         var swimDirection = element.getAttribute("swimDirection") == "right" ? 1 : -1;
 
-        var newOffset = (((now + swimOffset) / (1000 / swimSpeed)) % (width * 1.4)) - (width * 0.2);
+        var newOffset = (((now + (width * swimOffset)) / (1000 / swimSpeed)) % (width * 1.4)) - (width * 0.2);
 
         // if swimming to the left (-1), take the difference from width*1 to invert it
         if (swimDirection === -1) {
