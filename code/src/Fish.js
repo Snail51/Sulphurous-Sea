@@ -62,8 +62,6 @@ window.setupFish = function () {
         // remove placeholder node of type <AudioTile>
         fish.remove();
     }
-
-    window.setInterval(() => { window.moveFish() }, 50); // recalculate fish position every this many ms
 }
 
 window.moveFish = function () {
