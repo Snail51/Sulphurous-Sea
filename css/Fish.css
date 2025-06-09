@@ -17,4 +17,6 @@
     left: 0px;
     top: 0px;
     z-index: 3;
+    image-rendering: pixelated;
+    -ms-interpolation-mode: nearest-neighbor;
 }
