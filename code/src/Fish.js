@@ -111,6 +111,16 @@ window.setupDynamicFish = function () {
         { "sprite": "./sprites/exe/SulphurousSea/AquaticUrchin.gif", "mindepth": 30, "maxdepth": 100, "speed": 10.0, "direction": "random" },
         { "sprite": "./sprites/exe/SulphurousSea/Sulflounder.gif", "mindepth": 30, "maxdepth": 100, "speed": 20.0, "direction": "random" },
         { "sprite": "./sprites/exe/SulphurousSea/Trasher.gif", "mindepth": 30, "maxdepth": 100, "speed": 30.0, "direction": "random" },
+        { "sprite": "./sprites/exe/SulphurousSea/AquaticStarMinion.gif", "mindepth": 30, "maxdepth": 100, "speed": 10.0, "direction": "random" },
+        { "sprite": "./sprites/exe/SulphurousSea/BloodwormNormal.gif", "mindepth": 30, "maxdepth": 100, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/SulphurousSea/HerringMinion.gif", "mindepth": 30, "maxdepth": 100, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/SulphurousSea/Mauler.gif", "mindepth": 30, "maxdepth": 100, "speed": 15.0, "direction": "random" },
+        { "sprite": "./sprites/exe/SulphurousSea/MutatedTruffleMinion.gif", "mindepth": 30, "maxdepth": 100, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/SulphurousSea/Orthocera.gif", "mindepth": 30, "maxdepth": 100, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/SulphurousSea/Skyfin.gif", "mindepth": 30, "maxdepth": 100, "speed": 25.0, "direction": "random" },
+        { "sprite": "./sprites/exe/SulphurousSea/SlitheringEel.gif", "mindepth": 30, "maxdepth": 100, "speed": 30.0, "direction": "random" },
+        { "sprite": "./sprites/exe/SulphurousSea/SulphurousSharkron.gif", "mindepth": 30, "maxdepth": 100, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/SulphurousSea/Trilobite.gif", "mindepth": 30, "maxdepth": 100, "speed": 10.0, "direction": "random" },
     ];
 
     var abyss1 = [
@@ -129,6 +139,10 @@ window.setupDynamicFish = function () {
         { "sprite": "./sprites/exe/Abyss2/LuminousCorvina.gif", "mindepth": 200, "maxdepth": 300, "speed": 30.0, "direction": "random" },
         { "sprite": "./sprites/exe/Abyss2/Viperfish.gif", "mindepth": 200, "maxdepth": 300, "speed": 30.0, "direction": "random" },
         { "sprite": "./sprites/exe/Abyss2/Oarfish.gif", "mindepth": 200, "maxdepth": 300, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss2/BlackAnurianPlankton.gif", "mindepth": 200, "maxdepth": 300, "speed": 10.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss2/HerringMinion.gif", "mindepth": 200, "maxdepth": 300, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss2/Lionfish.gif", "mindepth": 200, "maxdepth": 300, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss2/OceanSpirit.gif", "mindepth": 200, "maxdepth": 300, "speed": 30.0, "direction": "random" },
     ];
 
     var abyss3 = [
@@ -141,17 +155,20 @@ window.setupDynamicFish = function () {
         { "sprite": "./sprites/exe/Abyss3/Viperfish.gif", "mindepth": 300, "maxdepth": 400, "speed": 30.0, "direction": "random" },
         { "sprite": "./sprites/exe/Abyss3/Oarfish.gif", "mindepth": 300, "maxdepth": 400, "speed": 20.0, "direction": "random" },
         { "sprite": "./sprites/exe/Abyss3/GulperEel.gif", "mindepth": 300, "maxdepth": 400, "speed": 30.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss3/CalamarisLamentMinion.gif", "mindepth": 300, "maxdepth": 400, "speed": 30.0, "direction": "random" },
     ];
 
     var abyss4 = [
-        { "sprite": "./sprites/exe/Abyss4/Bloatfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 10.5, "direction": "random" },
-        { "sprite": "./sprites/exe/Abyss4/Bloatfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 10.5, "direction": "random" },
-        { "sprite": "./sprites/exe/Abyss4/Bloatfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 10.5, "direction": "random" },
         { "sprite": "./sprites/exe/Abyss4/Bloatfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 10.5, "direction": "random" },
         { "sprite": "./sprites/exe/Abyss4/ColossalSquid.gif", "mindepth": 400, "maxdepth": 500, "speed": 20.0, "direction": "random" },
         { "sprite": "./sprites/exe/Abyss4/ReaperShark.gif", "mindepth": 400, "maxdepth": 500, "speed": 30.0, "direction": "random" },
         { "sprite": "./sprites/exe/Abyss4/GulperEel.gif", "mindepth": 400, "maxdepth": 500, "speed": 30.0, "direction": "random" },
         { "sprite": "./sprites/exe/Abyss4/EidolonWyrm.gif", "mindepth": 400, "maxdepth": 500, "speed": 30.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/EidolonSnail.gif", "mindepth": 400, "maxdepth": 500, "speed": 10.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/HadalUrnIsopod.gif", "mindepth": 400, "maxdepth": 500, "speed": 15.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/HadalUrnJellyfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 10.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/HadalUrnLamprey.gif", "mindepth": 400, "maxdepth": 500, "speed": 30.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/HadalUrnStarfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 10.0, "direction": "random" },
     ];
 
     function addRandomFishFromPool(pool, quantity) {
