@@ -70,6 +70,13 @@
             });
         </script>
 
+        <style>
+            .hr-debug {
+                margin-top: 100vh;
+                opacity: 0.0;
+            }
+        </style>
+
     </head>
 
     <body style="background-color: black; color: whitesmoke; font-size: 4vmin;">
@@ -104,22 +111,30 @@
 
             <div class="background-container">
                 <div class="background-layer active"
-                    style="background-image: url('./img/SulphurSeaSurfaceClose.png'); background-position: top;"></div>
+                    style="background-image: url('./img/SulphurSeaSurfaceClose.png'); background-position: top;">
+                </div>
                 <div class="background-layer"
-                    style="background-image: url('./img/AbyssBGLayer1.png'); background-position: top;"></div>
+                    style="background-image: url('./img/AbyssBGLayer1.png'); background-position: top;">
+                </div>
                 <div class="background-layer"
-                    style="background-image: url('./img/AbyssBGLayer2.png'); background-position: center;"></div>
+                    style="background-image: url('./img/AbyssBGLayer2.png'); background-position: center;">
+                </div>
                 <div class="background-layer"
-                    style="background-image: url('./img/AbyssBGLayer3.png'); background-position: center;"></div>
+                    style="background-image: url('./img/AbyssBGLayer3.png'); background-position: center;">
+                </div>
                 <div class="background-layer"
-                    style="background-image: url('./img/AbyssBGLayer4.png'); background-position: bottom;"></div>
+                    style="background-image: url('./img/AbyssBGLayer4.png'); background-position: bottom;">
+                </div>
+                <div class="background-layer"
+                    style="background-image: url('./img/AbyssBGLayer4.png'); background-position: bottom;">
+                </div>
             </div>
 
             <div class="fish-container">
-                <hr style="margin-top: 100vh;">
-                <hr style="margin-top: 100vh;">
-                <hr style="margin-top: 100vh;">
-                <hr style="margin-top: 100vh;">
+                <hr class="hr-debug">
+                <hr class="hr-debug">
+                <hr class="hr-debug">
+                <hr class="hr-debug">
             </div>
 
             <div style="height: 35vh"></div>
@@ -157,7 +172,9 @@
                 <AudioTile name="Void" src="./audiosrc/exe/AbyssLayer4.ogg" icon="fa-stars" metaLeft="4 | Abyss Level 4 / The Void" metaRight="DM | DM DOKURO"></AudioTile>
             </div>
 
-            <div style="height: 50vh"></div>
+            <div style="height: 100vh"></div>
+
+            <a title="Return to the Surface" onclick="globalThis.scrollTo({top: 0, left: 0, behavior: 'smooth'});" style="cursor: pointer; font-size: 10vmin; color: blueviolet; padding-left: 50%;"><i class="fa-solid fa-water-ladder"></i></a>
         </div>
     </body>
 
