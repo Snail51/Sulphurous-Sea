@@ -8,6 +8,21 @@
     left: 0px;
 }
 
+@keyframes swim-right {
+    from {left: -20vw;}
+    to {left: 120vw;}
+}
+
+@keyframes spin-clockwise {
+    from { transform: rotate(0deg) scale(1, 1); }
+    to { transform: rotate(359.99deg) scale(1, 1); }
+}
+
+@keyframes spin-clockwise-while-flipped {
+    from { transform: rotate(0deg) scale(-1, 1); }
+    to { transform: rotate(359.99deg) scale(-1, 1); }
+}
+
 .fish {
     width: fit-content;
     height: fit-content;
@@ -19,4 +34,5 @@
     z-index: 3;
     image-rendering: pixelated;
     -ms-interpolation-mode: nearest-neighbor;
+    
 }

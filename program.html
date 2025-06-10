@@ -58,18 +58,6 @@
         <script src="./code/exe/Fish.js" defer></script>
         <link rel="stylesheet" href="./css/Fish.css">
 
-        <!-- Control for `window.moveFish()` Interval. Uses `window.fishMoveInterval`. -->
-        <script>
-            window.changeFPS = function() {
-                window.fishMoveInterval ? window.clearInterval(window.fishMoveInterval) : void 0;
-                window.fishMoveInterval = window.setInterval(() => { window.moveFish() }, 1000 / document.getElementById("framerate").value);
-                document.getElementById("fpsnum").textContent = `${document.getElementById("framerate").value}fps`;
-            }
-            window.addEventListener("DOMContentLoaded", () => {
-                window.changeFPS();
-            });
-        </script>
-
         <style>
             .hr-debug {
                 margin-top: 100vh;
@@ -102,12 +90,6 @@
             <button onclick="window.fadeTitle()">Submerge</button>
         </div>
         <div id="content" class="content">
-
-            <div>
-                <label for="framerate"><b>FPS:</b></label>
-                <input id="framerate" type="range" min="1" max="60" value="20" step="1" onchange="window.changeFPS()">
-                <label for="framerate" id="fpsnum"></label>
-            </div>
 
             <div class="background-container">
                 <div class="background-layer active"
