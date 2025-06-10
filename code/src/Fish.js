@@ -2,7 +2,7 @@
 window.addEventListener("DOMContentLoaded", () => {
 
     // setup static <Fish>
-    console.log("Initializing all static <Fish>");
+    console.debug("Initializing all static <Fish>");
     window.setupStaticFish();
     console.debug("All static <Fish> initialized.");
 
@@ -55,18 +55,15 @@ window.createFish = function (sprite, depth = "10vh", speed = 1.0, direction = "
         let scaleFactor = Number.parseFloat((vmin / 360).toFixed(2));
         let oldWidth = event.target.naturalWidth;
         let oldHeight = event.target.naturalHeight;
-        console.log(scaleFactor, oldWidth, oldHeight);
         event.target.style.width = `${oldWidth * scaleFactor}px`;
         event.target.style.height = `${oldHeight * scaleFactor}px`;
     }
     
 
     // apply spinning animations (if requested)
-    console.log(`spin = ${spin}`);
     if (spin)
     {
         newFish.style.animation += `, ${direction === "right" ? "spin-clockwise" : "spin-clockwise-while-flipped"} 8s linear ${offset}s infinite ${Math.round(Math.random()) == 0 ? "forwards" : "reverse"}`;
-        console.log(newFish.style.animation);
     }
     else
     {
@@ -74,7 +71,6 @@ window.createFish = function (sprite, depth = "10vh", speed = 1.0, direction = "
         {
             newFish.style.transform += " scaleX(-1)";
         }
-        console.log(rotate);
         if(rotate != 0)
         {
             newFish.style.transform += ` rotate(${rotate}deg)`;
@@ -128,7 +124,7 @@ window.setupStaticFish = function () {
         // generate the AudioTile element
         var newFish = window.createFish(sprite, depth, speed, direction);
 
-        console.log(newFish);
+        console.debug(newFish);
 
         // place the new div structure onto the DOM
         fish.insertAdjacentElement("afterend", newFish);
@@ -199,22 +195,21 @@ window.setupDynamicFish = function () {
     ];
 
     var abyss4 = [
-        { "sprite": "./sprites/exe/Abyss4/Bloatfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 40, "direction": "random" },
-        { "sprite": "./sprites/exe/Abyss4/ColossalSquid.gif", "mindepth": 400, "maxdepth": 500, "speed": 30.0, "direction": "random" },
-        { "sprite": "./sprites/exe/Abyss4/ReaperShark.gif", "mindepth": 400, "maxdepth": 500, "speed": 20.0, "direction": "random" },
-        { "sprite": "./sprites/exe/Abyss4/GulperEel.gif", "mindepth": 400, "maxdepth": 500, "speed": 20.0, "direction": "random" },
-        { "sprite": "./sprites/exe/Abyss4/EidolonWyrm.gif", "mindepth": 400, "maxdepth": 500, "speed": 20.0, "direction": "random" },
-        { "sprite": "./sprites/exe/Abyss4/EidolonSnail.gif", "mindepth": 400, "maxdepth": 500, "speed": 40.0, "direction": "random" },
-        { "sprite": "./sprites/exe/Abyss4/HadalUrnIsopod.gif", "mindepth": 400, "maxdepth": 500, "speed": 35.0, "direction": "random" },
-        { "sprite": "./sprites/exe/Abyss4/HadalUrnJellyfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 40.0, "direction": "random" },
-        { "sprite": "./sprites/exe/Abyss4/HadalUrnLamprey.gif", "mindepth": 400, "maxdepth": 500, "speed": 20.0, "direction": "random" },
-        { "sprite": "./sprites/exe/Abyss4/HadalUrnStarfish.gif", "mindepth": 400, "maxdepth": 500, "speed": 40.0, "direction": "random", "spin": true },
+        { "sprite": "./sprites/exe/Abyss4/Bloatfish.gif", "mindepth": 400, "maxdepth": 550, "speed": 40, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/ColossalSquid.gif", "mindepth": 400, "maxdepth": 550, "speed": 30.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/ReaperShark.gif", "mindepth": 400, "maxdepth": 550, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/GulperEel.gif", "mindepth": 400, "maxdepth": 550, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/EidolonWyrm.gif", "mindepth": 400, "maxdepth": 550, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/EidolonSnail.gif", "mindepth": 400, "maxdepth": 550, "speed": 40.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/HadalUrnIsopod.gif", "mindepth": 400, "maxdepth": 550, "speed": 35.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/HadalUrnJellyfish.gif", "mindepth": 400, "maxdepth": 550, "speed": 40.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/HadalUrnLamprey.gif", "mindepth": 400, "maxdepth": 550, "speed": 20.0, "direction": "random" },
+        { "sprite": "./sprites/exe/Abyss4/HadalUrnStarfish.gif", "mindepth": 400, "maxdepth": 550, "speed": 40.0, "direction": "random", "spin": true },
     ];
 
     function addRandomFishFromPool(pool, quantity) {
         for (var i = 0; i < quantity; i++) {
             var selection = pool[(Math.round(Math.random() * (pool.length - 1)))];
-            console.log(selection);
             var depth = `${Math.random() * (selection.maxdepth - selection.mindepth) + selection.mindepth}vh`;
             var newFish = window.createFish(selection.sprite, depth, selection.speed, selection.direction, selection.spin, selection.rotate);
             document.querySelector(".fish-container").insertAdjacentElement("beforeend", newFish);
