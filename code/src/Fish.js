@@ -42,10 +42,10 @@ window.createFish = function (sprite, depth = "10vh", speed = 1.0, direction = "
 
     // apply swimming animations
     if (direction == "right") {
-        newFish.style.animation = `swim-right ${speed}s linear ${offset}s infinite forwards`;
+        newFish.style.animation = `swim-right ${speed}s steps(1512) ${offset}s infinite forwards`;
     }
     if (direction == "left") {
-        newFish.style.animation = `swim-right ${speed}s linear ${offset}s infinite reverse`;
+        newFish.style.animation = `swim-right ${speed}s steps(1512) ${offset}s infinite reverse`;
     }
 
     // scale the fish once loaded (based on element.naturalWidth / element.naturalHeight)
@@ -55,8 +55,8 @@ window.createFish = function (sprite, depth = "10vh", speed = 1.0, direction = "
         let scaleFactor = Number.parseFloat((vmin / 360).toFixed(2));
         let oldWidth = event.target.naturalWidth;
         let oldHeight = event.target.naturalHeight;
-        event.target.style.width = `${oldWidth * scaleFactor}px`;
-        event.target.style.height = `${oldHeight * scaleFactor}px`;
+        event.target.style.width = `${Math.floor(oldWidth * scaleFactor)}px`;
+        event.target.style.height = `${Math.floor(oldHeight * scaleFactor)}px`;
     }
     
 
@@ -139,7 +139,7 @@ window.setupStaticFish = function () {
  */
 window.setupDynamicFish = function () {
     var debug = [
-        { "sprite": "./sprites/exe/SulphurousSea/Trasher.gif", "mindepth": 75, "maxdepth": 100, "speed": 50.0, "direction": "right", "spin": true },
+        { "sprite": "./sprites/exe/SulphurousSea/Mauler.gif", "mindepth": 75, "maxdepth": 100, "speed": 50.0, "direction": "right", "spin": true },
     ]
 
     var surface = [
@@ -153,7 +153,7 @@ window.setupDynamicFish = function () {
         { "sprite": "./sprites/exe/SulphurousSea/Mauler.gif", "mindepth": 30, "maxdepth": 100, "speed": 35.0, "direction": "random" },
         { "sprite": "./sprites/exe/SulphurousSea/MutatedTruffleMinion.gif", "mindepth": 30, "maxdepth": 100, "speed": 30.0, "direction": "random" },
         { "sprite": "./sprites/exe/SulphurousSea/Orthocera.gif", "mindepth": 30, "maxdepth": 100, "speed": 30.0, "direction": "random", "rotate": -30 },
-        { "sprite": "./sprites/exe/SulphurousSea/Skyfin.gif", "mindepth": 30, "maxdepth": 100, "speed": 25.0, "direction": "random" },
+        { "sprite": "./sprites/exe/SulphurousSea/Skyfin.gif", "mindepth": 0, "maxdepth": 100, "speed": 25.0, "direction": "random" },
         { "sprite": "./sprites/exe/SulphurousSea/SlitheringEel.gif", "mindepth": 30, "maxdepth": 100, "speed": 20.0, "direction": "random" },
         { "sprite": "./sprites/exe/SulphurousSea/SulphurousSharkron.gif", "mindepth": 30, "maxdepth": 100, "speed": 30.0, "direction": "random" },
         { "sprite": "./sprites/exe/SulphurousSea/Trilobite.gif", "mindepth": 30, "maxdepth": 100, "speed": 40.0, "direction": "random" },
@@ -217,8 +217,8 @@ window.setupDynamicFish = function () {
     }
 
     //addRandomFishFromPool(debug, 10);
-    addRandomFishFromPool(surface, 30);
-    addRandomFishFromPool(abyss1, 35);
+    addRandomFishFromPool(surface, 25);
+    addRandomFishFromPool(abyss1, 25);
     addRandomFishFromPool(abyss2, 25);
     addRandomFishFromPool(abyss3, 17);
     addRandomFishFromPool(abyss4, 15);
